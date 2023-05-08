@@ -8,6 +8,8 @@
     margin-right: 2px;
     min-width: 75px;
     text-align: center !important;
+    background-color: #292b2c;
+    color: white;
   }
   
   .Button:hover {
