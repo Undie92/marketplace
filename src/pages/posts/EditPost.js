@@ -137,14 +137,14 @@ function EditPost() {
         </Alert>
       ))}
       <Button
-        className={`${btnStyles.Button} mx-auto d-block`}
+        className={`${btnStyles.Button}`}
         variant="dark"
         onClick={() => history.goBack()}
       >
         cancel
       </Button>
       <Button
-        className={`${btnStyles.Button} mx-auto d-block`}
+        className={`${btnStyles.Button}`}
         variant="dark"
         type="submit"
       >

@@ -23,6 +23,7 @@ import {
 import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "../posts/Post";
 import { fetchMoreData } from "../../utils/utils";
+import { ProfileEditDropdown } from "../../components/Dropdown";
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -55,6 +56,7 @@ function ProfilePage() {
 
   const mainProfile = (
     <>
+    {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
       <Row noGutters className="px-3 text-center">
         <Col lg={3} className="text-lg-left">
           <Image
@@ -68,15 +70,15 @@ function ProfilePage() {
           <Row className="justify-content-center no-gutters">
             <Col xs={3} className="my-2">
               <div>{profile?.posts_count}</div>
-              <div>posts</div>
+              <div>Posts</div>
             </Col>
             <Col xs={3} className="my-2">
               <div>{profile?.followers_count}</div>
-              <div>followers</div>
+              <div>Followers</div>
             </Col>
             <Col xs={3} className="my-2">
               <div>{profile?.following_count}</div>
-              <div>following</div>
+              <div>Following</div>
             </Col>
           </Row>
         </Col>
@@ -89,7 +91,7 @@ function ProfilePage() {
                 variant="dark"
                 onClick={() => {}}
               >
-                unfollow
+                Unfollow
               </Button>
             ) : (
               <Button
@@ -97,11 +99,12 @@ function ProfilePage() {
                 variant="dark"
                 onClick={() => handleFollow(profile)}
               >
-                follow
+                Follow
               </Button>
             ))}
         </Col>
-        {profile?.content && <Col className="p-3">{profile.content}</Col>}
+        
+        {profile?.content && <Col className="p-3"><p className="text-center">About me:</p>{profile.content}</Col>}
       </Row>
     </>
   );
@@ -109,7 +112,7 @@ function ProfilePage() {
   const mainProfilePosts = (
     <>
       <hr />
-      <p className="text-center">{profile?.owner}'s Sposts</p>
+      <p className="text-center">{profile?.owner}'s Posts</p>
       <hr />
       {profilePosts.results.length ? (
         <InfiniteScroll

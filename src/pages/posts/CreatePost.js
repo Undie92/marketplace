@@ -15,8 +15,10 @@ import Asset from "../../components/Asset";
 import { Alert, Image } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
+import { useRedirect } from "../../contexts/hooks/useRedirect";
 
 function CreatePost() {
+  useRedirect('loggedOut')
   const [errors, setErrors] = useState({});
 
   const [postData, setPostData] = useState({
