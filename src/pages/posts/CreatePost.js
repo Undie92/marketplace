@@ -16,18 +16,20 @@ import { Alert, Image } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useRedirect } from "../../contexts/hooks/useRedirect";
+import ChoiceDropdown from "../../components/ChoiceDropdown";
 
 function CreatePost() {
-  useRedirect('loggedOut')
+  useRedirect("loggedOut");
   const [errors, setErrors] = useState({});
 
   const [postData, setPostData] = useState({
     title: "",
     price: "",
+    category: "",
     image: "",
     description: "",
   });
-  const { title, price, image, description } = postData;
+  const { title, price, category, image, description } = postData;
 
   const imageInput = useRef(null);
   const history = useHistory();
@@ -55,6 +57,7 @@ function CreatePost() {
 
     formData.append("title", title);
     formData.append("price", price);
+    formData.append("category_type", category);
     formData.append("image", imageInput.current.files[0]);
     formData.append("description", description);
 
@@ -83,10 +86,10 @@ function CreatePost() {
           />
         </Form.Group>
         {errors?.title?.map((message, idx) => (
-              <Alert variant="warning" key={idx}>
-                {message}
-              </Alert>
-            ))}
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
         <Form.Group controlId="price">
           <Form.Label>Price in usd $</Form.Label>
           <Form.Control
@@ -98,10 +101,26 @@ function CreatePost() {
           />
         </Form.Group>
         {errors?.price?.map((message, idx) => (
-              <Alert variant="warning" key={idx}>
-                {message}
-              </Alert>
-            ))}
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
+        <Form.Group>
+          <Form.Label>Category</Form.Label>
+          <Form.Control
+            as="select"
+            name="category"
+            value={category}
+            onChange={handleChange}
+          >
+            <ChoiceDropdown />
+          </Form.Control>
+        </Form.Group>
+        {errors?.category?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
         <Form.Group controlId="description">
           <Form.Label>Info about product</Form.Label>
           <Form.Control
@@ -112,22 +131,22 @@ function CreatePost() {
             value={description}
             onChange={handleChange}
           />
-        </Form.Group> 
+        </Form.Group>
       </Form>
       {errors?.non_field_errors?.map((message, idx) => (
-              <Alert key={idx} variant="warning" className="mt-3">
-                {message}
-              </Alert>
-            ))}
+        <Alert key={idx} variant="warning" className="mt-3">
+          {message}
+        </Alert>
+      ))}
       <Button
-        className={`${btnStyles.Button} mx-auto d-block`}
+        className={`${btnStyles.Button}`}
         variant="dark"
         onClick={() => history.goBack()}
       >
         cancel
       </Button>
       <Button
-        className={`${btnStyles.Button} mx-auto d-block`}
+        className={`${btnStyles.Button}`}
         variant="dark"
         type="submit"
       >
@@ -171,10 +190,10 @@ function CreatePost() {
                 </Form.Label>
               )}
               {errors?.image?.map((message, idx) => (
-                  <Alert key={idx} variant="warning" className="mt-3">
-                    {message}
-                  </Alert>
-                ))}
+                <Alert key={idx} variant="warning" className="mt-3">
+                  {message}
+                </Alert>
+              ))}
 
               <Form.File
                 id="image-upload"
