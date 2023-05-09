@@ -1,11 +1,11 @@
 import React from "react";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Avatar from "../../components/Avatar";
 import styles from "../../styles/Post.module.css";
 import { axiosRes } from "../../api/axiosDefaults";
-import axios from "axios";
+import { EvenMoreDots } from "../../components/Dropdown";
 
 const Post = (props) => {
   const {
@@ -27,6 +27,20 @@ const Post = (props) => {
 
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
+  const history = useHistory();
+
+  const handleEdit = () => {
+    history.push(`/posts/${id}/edit`)
+  }
+
+  const handleDelete = async () => {
+    try{
+      await axiosRes.delete(`/posts/${id}/`)
+      history.goBack()
+    } catch(err){
+      console.log(err)
+    }
+  }
 
   const handleLike = async () => {
     try {
@@ -70,7 +84,7 @@ const Post = (props) => {
           </Link>
           <div className="d-flex align-items-center">
             <span>{updated_at}</span>
-            {is_owner && PostPage && "..."}
+            {is_owner && PostPage && <EvenMoreDots handleEdit={handleEdit} handleDelete={handleDelete}/>}
           </div>
         </Media>
       </Card.Body>
