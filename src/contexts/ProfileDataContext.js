@@ -26,16 +26,18 @@ export const ProfileDataProvider = ({ children }) => {
       setProfileData((prevState) => ({
         ...prevState,
         pageProfile: {
-          results: prevState.pageProfile.results.map((profile) => followHelper(profile, clickedProfile, data.id)),
+          results: prevState.pageProfile.results.map((profile) =>
+            followHelper(profile, clickedProfile, data.id)
+          ),
         },
         popularProfiles: {
           ...prevState.popularProfiles,
-          results: prevState.popularProfiles.results.map((profile) => followHelper(profile, clickedProfile, data.id)),
+          results: prevState.popularProfiles.results.map((profile) =>
+            followHelper(profile, clickedProfile, data.id)
+          ),
         },
       }));
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const handleUnfollow = async (clickedProfile) => {
@@ -56,9 +58,7 @@ export const ProfileDataProvider = ({ children }) => {
           ),
         },
       }));
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
@@ -71,9 +71,7 @@ export const ProfileDataProvider = ({ children }) => {
           ...prevState,
           popularProfiles: data,
         }));
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
 
     handleMount();
@@ -81,7 +79,9 @@ export const ProfileDataProvider = ({ children }) => {
 
   return (
     <ProfileDataContext.Provider value={profileData}>
-      <SetProfileDataContext.Provider value={{ setProfileData, handleFollow, handleUnfollow }}>
+      <SetProfileDataContext.Provider
+        value={{ setProfileData, handleFollow, handleUnfollow }}
+      >
         {children}
       </SetProfileDataContext.Provider>
     </ProfileDataContext.Provider>

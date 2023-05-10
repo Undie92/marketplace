@@ -40,9 +40,7 @@ function EditPost() {
         is_owner
           ? setPostData({ title, price, description, image })
           : history.push("/");
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
     handleMount();
   }, [history, id]);
@@ -79,7 +77,6 @@ function EditPost() {
       await axiosReq.put(`/posts/${id}/`, formData);
       history.push(`/posts/${id}`);
     } catch (err) {
-      console.log(err);
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
       }

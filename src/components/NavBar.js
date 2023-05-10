@@ -1,5 +1,7 @@
 import React from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 import styles from "../styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.jpeg";
@@ -10,20 +12,20 @@ import {
 import Avatar from "./Avatar";
 import axios from "axios";
 import ClickOutsideToggle from "../contexts/hooks/ClickOutsideToggle";
+import { removeTokenTimestamp } from "../utils/utils";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
-  const {expanded, setExpanded, ref} = ClickOutsideToggle();
+  const { expanded, setExpanded, ref } = ClickOutsideToggle();
 
   const handleSignOut = async () => {
     try {
       await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
-    } catch (err) {
-      console.log(err);
-    }
+      removeTokenTimestamp();
+    } catch (err) {}
   };
 
   const addPostIcon = (
@@ -90,7 +92,7 @@ const NavBar = () => {
     >
       <Container>
         <NavLink to="/">
-          <Navbar.Brand href="#home">
+          <Navbar.Brand>
             <img src={logo} alt="logo" height="45" />
           </Navbar.Brand>
         </NavLink>
