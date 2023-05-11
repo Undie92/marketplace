@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import styles from "../styles/NavBar.module.css";
-import { NavLink } from "react-router-dom";
+import NavLink from "react-router-dom/NavLink";
 import logo from "../assets/logo.jpeg";
 import {
   useCurrentUser,

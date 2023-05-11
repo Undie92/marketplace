@@ -16,6 +16,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "../profiles/PopularProfiles";
 import ChoiceDropdown from "../../components/ChoiceDropdown";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 function PostList({ message, filter = "" }) {
   const [posts, setPosts] = useState({ results: [] });
@@ -24,6 +25,8 @@ function PostList({ message, filter = "" }) {
 
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
+
+  const currentUser = useCurrentUser();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -42,7 +45,7 @@ function PostList({ message, filter = "" }) {
     return () => {
       clearTimeout(timer);
     };
-  }, [filter, category, query, pathname]);
+  }, [filter, category, query, pathname, currentUser]);
 
   return (
     <Row className="h-100">
